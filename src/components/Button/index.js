@@ -5,7 +5,10 @@ import buttonStyles from './button.styles';
 const Button = ({children, ...props}) => {
   const styles = buttonStyles(props);
   return (
-    <TouchableOpacity activeOpacity={0.7} style={styles.buttonContainer}>
+    <TouchableOpacity
+      onPress={props.onPress}
+      activeOpacity={0.7}
+      style={styles.buttonContainer}>
       {children}
     </TouchableOpacity>
   );

@@ -86,7 +86,11 @@ const Intro = () => {
         <Typography style={[styles.title]} size={24} color="main" weight={700}>
           {item.title}
         </Typography>
-        <Typography weight={400} size={18} width={dimensions.width * 0.8}>
+        <Typography
+          color={'black'}
+          weight={400}
+          size={18}
+          width={dimensions.width * 0.8}>
           {item.description}
         </Typography>
       </View>

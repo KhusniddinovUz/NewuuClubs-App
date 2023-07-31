@@ -1,8 +1,9 @@
 import React from 'react';
-import Welcome from './src/pages/Welcome';
+import Login from './src/pages/Login';
+// import Intro from './src/pages/Intro';
 
 const App = () => {
-  return <Welcome />;
+  return <Login />;
 };
 
 export default App;
