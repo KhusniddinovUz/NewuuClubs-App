@@ -1,9 +1,10 @@
 import React from 'react';
-import Login from './src/pages/Login';
-// import Intro from './src/pages/Intro';
+import Intro from './src/pages/Intro';
+import NavigatedPages from './src/navigation';
 
 const App = () => {
-  return <Login />;
+  const firstTime = false;
+  return firstTime ? <Intro /> : <NavigatedPages />;
 };
 
 export default App;

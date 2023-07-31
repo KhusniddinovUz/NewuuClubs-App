@@ -26,7 +26,9 @@ const Typography = ({children, inlineStyle, ...props}) => {
   }, [props.weight]);
 
   return (
-    <Text style={[styles.textStyles, {fontFamily: fontFamily, ...inlineStyle}]}>
+    <Text
+      onPress={props.onPress}
+      style={[styles.textStyles, {fontFamily: fontFamily, ...inlineStyle}]}>
       {children}
     </Text>
   );

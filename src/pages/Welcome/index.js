@@ -4,7 +4,7 @@ import Typography from '../../components/Typography';
 import Button from '../../components/Button';
 import welcomeStyles from './welcome.styles';
 
-const Welcome = () => {
+const Welcome = ({navigation}) => {
   const windowWidth = Dimensions.get('window').width;
   return (
     <View style={welcomeStyles.container}>
@@ -18,6 +18,9 @@ const Welcome = () => {
           Take part in activities with friends!
         </Typography>
         <Button
+          onPress={() => {
+            navigation.navigate('register');
+          }}
           width={windowWidth * 0.7}
           backgroundColor={'main'}
           paddingVertical={7}
@@ -30,7 +33,13 @@ const Welcome = () => {
           <Typography inlineStyle={{marginRight: 5}} size={16} color={'black'}>
             Already have an account?
           </Typography>
-          <Typography size={16} color={'main'} weight={600}>
+          <Typography
+            onPress={() => {
+              navigation.navigate('login');
+            }}
+            size={16}
+            color={'main'}
+            weight={600}>
             Login
           </Typography>
         </View>
