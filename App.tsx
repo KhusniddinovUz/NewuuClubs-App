@@ -1,23 +1,8 @@
 import React from 'react';
-import {View, Dimensions} from 'react-native';
-import Typography from './src/components/Typography';
+import Intro from './src/pages/Intro';
 
 const App = () => {
-  return (
-    <View
-      style={[
-        {
-          justifyContent: 'center',
-          alignItems: 'center',
-          width: Dimensions.get('window').width,
-          height: Dimensions.get('window').height,
-        },
-      ]}>
-      <Typography weight={700} color={'main'} size={24}>
-        Welcome!!!
-      </Typography>
-    </View>
-  );
+  return <Intro />;
 };
 
 export default App;
