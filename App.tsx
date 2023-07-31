@@ -1,5 +1,6 @@
 import React from 'react';
-import {View, Text, Dimensions} from 'react-native';
+import {View, Dimensions} from 'react-native';
+import Typography from './src/components/Typography';
 
 const App = () => {
   return (
@@ -12,8 +13,9 @@ const App = () => {
           height: Dimensions.get('window').height,
         },
       ]}>
-      <Text>Welcome!!!</Text>
-      <Text style={{fontSize: 24}}>Welcome!!!</Text>
+      <Typography weight={700} color={'main'} size={24}>
+        Welcome!!!
+      </Typography>
     </View>
   );
 };
