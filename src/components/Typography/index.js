@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import typographyStyles from './typography.styles';
 import {Text} from 'react-native';
 
-const Typography = ({children, ...props}) => {
+const Typography = ({children, inlineStyle, ...props}) => {
   const [fontFamily, setFontFamily] = useState('');
   const styles = typographyStyles(props);
 
@@ -26,7 +26,7 @@ const Typography = ({children, ...props}) => {
   }, [props.weight]);
 
   return (
-    <Text style={[styles.textStyles, {fontFamily: fontFamily}]}>
+    <Text style={[styles.textStyles, {fontFamily: fontFamily, ...inlineStyle}]}>
       {children}
     </Text>
   );
