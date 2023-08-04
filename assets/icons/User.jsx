@@ -11,9 +11,7 @@ function SvgComponent(props) {
       xmlns="http://www.w3.org/2000/svg"
       {...props}>
       <Path
-        fillRule="evenodd"
-        clipRule="evenodd"
-        d="M5.5 10V7a6.5 6.5 0 1113 0v3h.5a3 3 0 013 3v7a3 3 0 01-3 3H5a3 3 0 01-3-3v-7a3 3 0 013-3h.5zm4.025-5.475A3.5 3.5 0 0115.5 7v3h-7V7a3.5 3.5 0 011.025-2.475z"
+        d="M12 1a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM7 14a5 5 0 00-5 5v3a1 1 0 001 1h18a1 1 0 001-1v-3a5 5 0 00-5-5H7z"
         fill="#66328E"
       />
     </Svg>
