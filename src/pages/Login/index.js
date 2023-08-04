@@ -8,8 +8,10 @@ import {Formik} from 'formik';
 import * as Yup from 'yup';
 import EnvelopeIcon from '../../../assets/icons/Envelope';
 import LockIcon from '../../../assets/icons/Lock';
+import {useLoginUserMutation} from '../../store/actions/auth';
 
 const Login = () => {
+  const [mutation] = useLoginUserMutation();
   const windowWidth = Dimensions.get('window').width;
   const [submitClicked, setSubmitClicked] = useState(false);
   const loginValidationSchema = Yup.object().shape({
@@ -24,6 +26,17 @@ const Login = () => {
   });
   const submitHandler = values => {
     console.log(values);
+    mutation(values)
+      .unwrap()
+      .then(data => {
+        // toast.success('Successfully logged in');
+        // router.push('/');
+        console.log(data);
+      })
+      .catch(error => {
+        // errorHandle(error.data);
+        console.log(error);
+      });
   };
 
   return (
