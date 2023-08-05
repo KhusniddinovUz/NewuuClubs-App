@@ -19,7 +19,7 @@ const Welcome = ({navigation}) => {
         </Typography>
         <Button
           onPress={() => {
-            navigation.navigate('register');
+            navigation.navigate('signup');
           }}
           width={windowWidth * 0.7}
           backgroundColor={'main'}

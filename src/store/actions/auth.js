@@ -16,7 +16,14 @@ export const authApi = baseApi.injectEndpoints({
         body: {username: email, password},
       }),
     }),
+    signupUser: mutation({
+      query: ({first_name, last_name, email, password}) => ({
+        url: 'api/auth/register/',
+        method: 'POST',
+        body: {first_name, last_name, email, password, username: email},
+      }),
+    }),
   }),
 });
 
-export const {useLoginUserMutation} = authApi;
+export const {useLoginUserMutation, useSignupUserMutation} = authApi;
