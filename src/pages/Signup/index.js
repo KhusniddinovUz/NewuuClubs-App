@@ -10,6 +10,7 @@ import EnvelopeIcon from '../../../assets/icons/Envelope';
 import LockIcon from '../../../assets/icons/Lock';
 import UserIcon from '../../../assets/icons/User';
 import {useSignupUserMutation} from '../../store/actions/auth';
+import Toast from 'react-native-toast-message';
 
 const Signup = ({navigation}) => {
   const [mutation] = useSignupUserMutation();
@@ -18,10 +19,10 @@ const Signup = ({navigation}) => {
   const loginValidationSchema = Yup.object().shape({
     firstName: Yup.string()
       .min(4, 'First name is too short')
-      .required('Name is required'),
+      .required('First name is required'),
     lastName: Yup.string()
       .min(4, 'First name is too short')
-      .required('Name is required'),
+      .required('Last name is required'),
     email: Yup.string()
       .email('Invalid email')
       .matches(/\@newuu.uz$/, 'Enter your university email')
@@ -38,21 +39,33 @@ const Signup = ({navigation}) => {
       email: values.email,
       password: values.password,
     });
-    mutation({
+    const user = {
       first_name: values.firstName,
       last_name: values.lastName,
       email: values.email,
       password: values.password,
-    })
+    };
+    mutation(user)
       .unwrap()
       .then(data => {
         // toast.success('Successfully logged in');
         // router.push('/');
-        console.log(data);
+        Toast.show({
+          type: 'success',
+          text1: 'Successful signup',
+          text2: 'You have successfully created your account',
+        });
       })
       .catch(error => {
-        // errorHandle(error.data);
-        console.log(error.data.errors);
+        if (error.data) {
+          error.data.errors.forEach(item => {
+            Toast.show({
+              type: 'error',
+              text1: item.attr.toUpperCase(),
+              text2: item.detail,
+            });
+          });
+        }
       });
   };
 

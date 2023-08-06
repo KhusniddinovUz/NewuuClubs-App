@@ -3,6 +3,8 @@ import Intro from './src/pages/Intro';
 import NavigatedPages from './src/navigation';
 import {Provider} from 'react-redux';
 import store from './src/store';
+import Toast from 'react-native-toast-message';
+import toastConfig from './src/config/toastConfig';
 
 const App = () => {
   const firstTime = false;
@@ -11,6 +13,7 @@ const App = () => {
   ) : (
     <Provider store={store}>
       <NavigatedPages />
+      <Toast config={toastConfig} />
     </Provider>
   );
 };
