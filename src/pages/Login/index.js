@@ -9,7 +9,6 @@ import * as Yup from 'yup';
 import EnvelopeIcon from '../../../assets/icons/Envelope';
 import LockIcon from '../../../assets/icons/Lock';
 import {useLoginUserMutation} from '../../store/actions/auth';
-import toastMessage from '../../utils/toaster';
 import Toast from 'react-native-toast-message';
 
 const Login = ({navigation}) => {
@@ -31,19 +30,23 @@ const Login = ({navigation}) => {
     mutation(values)
       .unwrap()
       .then(data => {
-        // toast.success('Successfully logged in');
         // router.push('/');
-        console.log(data);
+        Toast.show({
+          type: 'success',
+          text1: 'Successful login',
+          text2: 'You have successfully logged in',
+        });
       })
       .catch(error => {
-        error.data.errors.forEach(item => {
-          Toast.show({
-            type: 'error',
-            text1: item.attr.toUpperCase(),
-            text2: item.detail,
+        if (error.data) {
+          error.data.errors.forEach(item => {
+            Toast.show({
+              type: 'error',
+              text1: item.attr.toUpperCase(),
+              text2: item.detail,
+            });
           });
-        });
-        // console.log(error.data);
+        }
       });
   };
 
