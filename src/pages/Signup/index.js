@@ -49,12 +49,12 @@ const Signup = ({navigation}) => {
       .unwrap()
       .then(data => {
         // toast.success('Successfully logged in');
-        // router.push('/');
         Toast.show({
           type: 'success',
           text1: 'Successful signup',
           text2: 'You have successfully created your account',
         });
+        navigation.navigate('home');
       })
       .catch(error => {
         if (error.data) {

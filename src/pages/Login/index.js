@@ -10,6 +10,7 @@ import EnvelopeIcon from '../../../assets/icons/Envelope';
 import LockIcon from '../../../assets/icons/Lock';
 import {useLoginUserMutation} from '../../store/actions/auth';
 import Toast from 'react-native-toast-message';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Login = ({navigation}) => {
   const [mutation] = useLoginUserMutation();
@@ -29,13 +30,19 @@ const Login = ({navigation}) => {
     console.log(values);
     mutation(values)
       .unwrap()
-      .then(data => {
-        // router.push('/');
+      .then(async data => {
+        console.log(data);
+        await AsyncStorage.setItem('token', data.token);
+        const user = await data.user;
+        const jsonValue = JSON.stringify(user);
+        console.log('jsonvalue: ', jsonValue);
+        await AsyncStorage.setItem('user', jsonValue);
         Toast.show({
           type: 'success',
           text1: 'Successful login',
           text2: 'You have successfully logged in',
         });
+        navigation.navigate('home');
       })
       .catch(error => {
         if (error.data) {

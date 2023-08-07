@@ -1,19 +1,18 @@
 import React from 'react';
-import Intro from './src/pages/Intro';
-import NavigatedPages from './src/navigation';
 import {Provider} from 'react-redux';
 import store from './src/store';
 import Toast from 'react-native-toast-message';
 import toastConfig from './src/config/toastConfig';
+import {NavigationContainer} from '@react-navigation/native';
+import Main from './Main';
 
 const App = () => {
-  const firstTime = false;
-  return firstTime ? (
-    <Intro />
-  ) : (
+  return (
     <Provider store={store}>
-      <NavigatedPages />
-      <Toast config={toastConfig} />
+      <NavigationContainer>
+        <Main />
+        <Toast config={toastConfig} />
+      </NavigationContainer>
     </Provider>
   );
 };

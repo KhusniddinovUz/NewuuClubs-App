@@ -7,8 +7,12 @@ import {colors} from '../../config/theme';
 import Educator from '../../../assets/intro-slides/educator';
 import Learning from '../../../assets/intro-slides/learning';
 import Certification from '../../../assets/intro-slides/certification';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {useDispatch} from 'react-redux';
+import {changeFirstTime} from '../../store/auth-slice';
 
-const Intro = () => {
+const Intro = ({navigation}) => {
+  const dispatch = useDispatch();
   const styles = introSliderStyles();
   const slides = [
     {
@@ -79,6 +83,12 @@ const Intro = () => {
     );
   };
 
+  const handleDone = async () => {
+    await AsyncStorage.setItem('firstTime', 'false');
+    dispatch(changeFirstTime());
+    navigation.navigate('welcome');
+  };
+
   const _renderItem = ({item, dimensions}) => (
     <View style={[styles.container, dimensions]}>
       {item.image}
@@ -108,6 +118,7 @@ const Intro = () => {
       showDoneButton={true}
       showNextButton={true}
       showPrevButton={true}
+      onDone={handleDone}
       renderNextButton={_renderNextButton}
       renderPrevButton={_renderBackButton}
       renderDoneButton={_renderDoneButton}
