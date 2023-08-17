@@ -20,7 +20,6 @@ const signupStyles = StyleSheet.create({
     flexDirection: 'row',
     marginTop: 20,
   },
-  error: {},
   inputBox: {
     position: 'relative',
     width: windowWidth * 0.8,
@@ -44,6 +43,9 @@ const signupStyles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 10,
     paddingLeft: 55,
+  },
+  errorText: {
+    width: windowWidth,
   },
 });
 

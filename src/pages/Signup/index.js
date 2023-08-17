@@ -1,5 +1,12 @@
 import React, {useState} from 'react';
-import {View, Dimensions, Image, TextInput} from 'react-native';
+import {
+  View,
+  Dimensions,
+  Image,
+  TextInput,
+  ScrollView,
+  ActivityIndicator,
+} from 'react-native';
 import logo from '../../../assets/logo.png';
 import signupStyles from './signup.styles';
 import Typography from '../../components/Typography';
@@ -11,8 +18,10 @@ import LockIcon from '../../../assets/icons/Lock';
 import UserIcon from '../../../assets/icons/User';
 import {useSignupUserMutation} from '../../store/actions/auth';
 import Toast from 'react-native-toast-message';
+import {useSelector} from 'react-redux';
 
 const Signup = ({navigation}) => {
+  const loading = useSelector(state => state.auth.loading);
   const [mutation] = useSignupUserMutation();
   const windowWidth = Dimensions.get('window').width;
   const [submitClicked, setSubmitClicked] = useState(false);
@@ -70,124 +79,142 @@ const Signup = ({navigation}) => {
   };
 
   return (
-    <View style={signupStyles.container}>
-      <Image style={signupStyles.logo} source={logo} />
-      <Typography color={'main'} size={22} weight={700}>
-        Create an account
-      </Typography>
-
-      <Formik
-        initialValues={{email: '', password: '', firstName: '', lastName: ''}}
-        validationSchema={loginValidationSchema}
-        validateOnChange={submitClicked}
-        onSubmit={submitHandler}>
-        {({handleChange, handleSubmit, values, errors}) => (
-          <View style={signupStyles.form}>
-            <View style={signupStyles.inputBox}>
-              <View style={signupStyles.inputIcon}>
-                <UserIcon />
-              </View>
-              <TextInput
-                placeholderTextColor={'#000'}
-                onChangeText={handleChange('firstName')}
-                value={values.firstName}
-                placeholder="First name"
-                style={signupStyles.input}
-              />
-              {errors.firstName && (
-                <Typography color={'error'} style={signupStyles.errorText}>
-                  {errors.firstName}
-                </Typography>
-              )}
-            </View>
-            <View style={signupStyles.inputBox}>
-              <View style={signupStyles.inputIcon}>
-                <UserIcon />
-              </View>
-              <TextInput
-                placeholderTextColor={'#000'}
-                onChangeText={handleChange('lastName')}
-                value={values.lastName}
-                placeholder="Last name"
-                style={signupStyles.input}
-              />
-              {errors.lastName && (
-                <Typography color={'error'} style={signupStyles.errorText}>
-                  {errors.lastName}
-                </Typography>
-              )}
-            </View>
-            <View style={signupStyles.inputBox}>
-              <View style={signupStyles.inputIcon}>
-                <EnvelopeIcon />
-              </View>
-              <TextInput
-                placeholderTextColor={'#000'}
-                onChangeText={handleChange('email')}
-                value={values.email}
-                placeholder="Email"
-                style={signupStyles.input}
-              />
-              {errors.email && (
-                <Typography color={'error'} style={signupStyles.errorText}>
-                  {errors.email}
-                </Typography>
-              )}
-            </View>
-            <View style={signupStyles.inputBox}>
-              <View style={signupStyles.inputIcon}>
-                <LockIcon />
-              </View>
-              <TextInput
-                placeholderTextColor={'#000'}
-                onChangeText={handleChange('password')}
-                value={values.password}
-                placeholder="Password"
-                secureTextEntry
-                style={signupStyles.input}
-              />
-              {errors.password && (
-                <Typography color={'error'} style={signupStyles.errorText}>
-                  {errors.password}
-                </Typography>
-              )}
-            </View>
-            <Button
-              onPress={() => {
-                handleSubmit();
-                setSubmitClicked(true);
-              }}
-              borderRadius={10}
-              paddingVertical={12}
-              width={windowWidth * 0.8}
-              backgroundColor={'main'}>
-              <Typography color={'white'} size={18} weight={600}>
-                SIGN UP
-              </Typography>
-            </Button>
-          </View>
-        )}
-      </Formik>
-
-      <View style={signupStyles.textWrapper}>
-        <Typography
-          color={'black'}
-          size={16}
-          weight={500}
-          inlineStyle={{marginRight: 5}}>
-          Have an account?
+    <ScrollView>
+      <View style={signupStyles.container}>
+        <Image style={signupStyles.logo} source={logo} />
+        <Typography color={'main'} size={22} weight={700}>
+          Create an account
         </Typography>
-        <Typography
-          onPress={() => {
-            navigation.navigate('login');
-          }}
-          size={16}
-          color={'main'}
-          weight={500}>
-          Log in
-        </Typography>
+
+        <Formik
+          initialValues={{email: '', password: '', firstName: '', lastName: ''}}
+          validationSchema={loginValidationSchema}
+          validateOnChange={submitClicked}
+          onSubmit={submitHandler}>
+          {({handleChange, handleSubmit, values, errors}) => (
+            <View style={signupStyles.form}>
+              <View style={signupStyles.inputBox}>
+                <View style={signupStyles.inputIcon}>
+                  <UserIcon />
+                </View>
+                <TextInput
+                  placeholderTextColor={'#000'}
+                  onChangeText={handleChange('firstName')}
+                  value={values.firstName}
+                  placeholder="First name"
+                  style={signupStyles.input}
+                />
+                {errors.firstName && (
+                  <Typography
+                    color={'error'}
+                    inlineStyle={{textAlign: 'left'}}
+                    style={signupStyles.errorText}>
+                    {errors.firstName}
+                  </Typography>
+                )}
+              </View>
+              <View style={signupStyles.inputBox}>
+                <View style={signupStyles.inputIcon}>
+                  <UserIcon />
+                </View>
+                <TextInput
+                  placeholderTextColor={'#000'}
+                  onChangeText={handleChange('lastName')}
+                  value={values.lastName}
+                  placeholder="Last name"
+                  style={signupStyles.input}
+                />
+                {errors.lastName && (
+                  <Typography
+                    color={'error'}
+                    inlineStyle={{textAlign: 'left'}}
+                    style={signupStyles.errorText}>
+                    {errors.lastName}
+                  </Typography>
+                )}
+              </View>
+              <View style={signupStyles.inputBox}>
+                <View style={signupStyles.inputIcon}>
+                  <EnvelopeIcon />
+                </View>
+                <TextInput
+                  placeholderTextColor={'#000'}
+                  onChangeText={handleChange('email')}
+                  value={values.email}
+                  placeholder="Email"
+                  style={signupStyles.input}
+                />
+                {errors.email && (
+                  <Typography
+                    color={'error'}
+                    inlineStyle={{textAlign: 'left'}}
+                    style={signupStyles.errorText}>
+                    {errors.email}
+                  </Typography>
+                )}
+              </View>
+              <View style={signupStyles.inputBox}>
+                <View style={signupStyles.inputIcon}>
+                  <LockIcon />
+                </View>
+                <TextInput
+                  placeholderTextColor={'#000'}
+                  onChangeText={handleChange('password')}
+                  value={values.password}
+                  placeholder="Password"
+                  secureTextEntry
+                  style={signupStyles.input}
+                />
+                {errors.password && (
+                  <Typography
+                    color={'error'}
+                    inlineStyle={{textAlign: 'left'}}
+                    style={signupStyles.errorText}>
+                    {errors.password}
+                  </Typography>
+                )}
+              </View>
+              <Button
+                onPress={() => {
+                  handleSubmit();
+                  setSubmitClicked(true);
+                }}
+                borderRadius={10}
+                paddingVertical={12}
+                width={windowWidth * 0.8}
+                backgroundColor={'main'}>
+                {loading ? (
+                  <ActivityIndicator color={'#fff'} size={'large'} />
+                ) : (
+                  <Typography color={'white'} size={18} weight={600}>
+                    SIGN UP
+                  </Typography>
+                )}
+              </Button>
+            </View>
+          )}
+        </Formik>
+
+        <View style={signupStyles.textWrapper}>
+          <Typography
+            color={'black'}
+            size={16}
+            weight={500}
+            inlineStyle={{marginRight: 5}}>
+            Have an account?
+          </Typography>
+          <Typography
+            onPress={() => {
+              navigation.navigate('login');
+            }}
+            size={16}
+            color={'main'}
+            weight={500}>
+            Log in
+          </Typography>
+        </View>
       </View>
-    </View>
+    </ScrollView>
   );
 };
 

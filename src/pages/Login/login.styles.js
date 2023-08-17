@@ -45,6 +45,9 @@ const loginStyles = StyleSheet.create({
     borderRadius: 10,
     paddingLeft: 55,
   },
+  errorText: {
+    width: windowWidth,
+  },
 });
 
 export default loginStyles;

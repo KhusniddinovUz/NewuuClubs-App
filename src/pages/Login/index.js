@@ -1,5 +1,11 @@
 import React, {useState} from 'react';
-import {View, Dimensions, Image, TextInput} from 'react-native';
+import {
+  View,
+  Dimensions,
+  Image,
+  TextInput,
+  ActivityIndicator,
+} from 'react-native';
 import logo from '../../../assets/logo.png';
 import loginStyles from './login.styles';
 import Typography from '../../components/Typography';
@@ -10,9 +16,11 @@ import EnvelopeIcon from '../../../assets/icons/Envelope';
 import LockIcon from '../../../assets/icons/Lock';
 import {useLoginUserMutation} from '../../store/actions/auth';
 import Toast from 'react-native-toast-message';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import {storage} from '../../../App';
+import {useSelector} from 'react-redux';
 
 const Login = ({navigation}) => {
+  const loading = useSelector(state => state.auth.loading);
   const [mutation] = useLoginUserMutation();
   const windowWidth = Dimensions.get('window').width;
   const [submitClicked, setSubmitClicked] = useState(false);
@@ -32,11 +40,11 @@ const Login = ({navigation}) => {
       .unwrap()
       .then(async data => {
         console.log(data);
-        await AsyncStorage.setItem('token', data.token);
+        storage.set('token', data.token);
         const user = await data.user;
         const jsonValue = JSON.stringify(user);
-        console.log('jsonvalue: ', jsonValue);
-        await AsyncStorage.setItem('user', jsonValue);
+        storage.set('user', jsonValue);
+        console.log('user set storage');
         Toast.show({
           type: 'success',
           text1: 'Successful login',
@@ -86,7 +94,10 @@ const Login = ({navigation}) => {
                 style={loginStyles.input}
               />
               {errors.email && (
-                <Typography color={'error'} style={loginStyles.errorText}>
+                <Typography
+                  color={'error'}
+                  inlineStyle={{textAlign: 'left'}}
+                  style={loginStyles.errorText}>
                   {errors.email}
                 </Typography>
               )}
@@ -104,7 +115,10 @@ const Login = ({navigation}) => {
                 style={loginStyles.input}
               />
               {errors.password && (
-                <Typography color={'error'} style={loginStyles.errorText}>
+                <Typography
+                  color={'error'}
+                  inlineStyle={{textAlign: 'left'}}
+                  style={loginStyles.errorText}>
                   {errors.password}
                 </Typography>
               )}
@@ -118,9 +132,13 @@ const Login = ({navigation}) => {
               paddingVertical={12}
               width={windowWidth * 0.8}
               backgroundColor={'main'}>
-              <Typography color={'white'} size={18} weight={600}>
-                LOG IN
-              </Typography>
+              {loading ? (
+                <ActivityIndicator color={'#fff'} size={'large'} />
+              ) : (
+                <Typography color={'white'} size={18} weight={600}>
+                  LOG IN
+                </Typography>
+              )}
             </Button>
           </View>
         )}
