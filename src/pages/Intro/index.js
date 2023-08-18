@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {View} from 'react-native';
 import Typography from '../../components/Typography';
 import AppIntroSlider from 'react-native-app-intro-slider';
@@ -7,11 +7,12 @@ import {colors} from '../../config/theme';
 import Educator from '../../../assets/intro-slides/educator';
 import Learning from '../../../assets/intro-slides/learning';
 import Certification from '../../../assets/intro-slides/certification';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {changeFirstTime} from '../../store/auth-slice';
+import {storage} from '../../../App';
 
 const Intro = ({navigation}) => {
+  const firstTime = useSelector(state => state.auth.firstTime);
   const dispatch = useDispatch();
   const styles = introSliderStyles();
   const slides = [
@@ -35,6 +36,12 @@ const Intro = ({navigation}) => {
     },
   ];
 
+  useEffect(() => {
+    if (!firstTime) {
+      navigation.navigate('welcome');
+    }
+  }, [firstTime, navigation]);
+
   const _renderDoneButton = () => {
     return (
       <View
@@ -42,7 +49,7 @@ const Intro = ({navigation}) => {
           width: 150,
           borderRadius: 5,
           paddingVertical: 7,
-          backgroundColor: colors['main'],
+          backgroundColor: colors.main,
         }}>
         <Typography size={16} lineHeight={36} color={'white'} weight={600}>
           Get Started
@@ -84,7 +91,7 @@ const Intro = ({navigation}) => {
   };
 
   const handleDone = async () => {
-    await AsyncStorage.setItem('firstTime', 'false');
+    storage.set('firstTime', 'false');
     dispatch(changeFirstTime());
     navigation.navigate('welcome');
   };

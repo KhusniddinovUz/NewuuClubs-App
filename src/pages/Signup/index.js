@@ -19,6 +19,7 @@ import UserIcon from '../../../assets/icons/User';
 import {useSignupUserMutation} from '../../store/actions/auth';
 import Toast from 'react-native-toast-message';
 import {useSelector} from 'react-redux';
+import {storage} from '../../../App';
 
 const Signup = ({navigation}) => {
   const loading = useSelector(state => state.auth.loading);
@@ -42,12 +43,6 @@ const Signup = ({navigation}) => {
       .required('Password is required'),
   });
   const submitHandler = values => {
-    console.log({
-      first_name: values.firstName,
-      last_name: values.lastName,
-      email: values.email,
-      password: values.password,
-    });
     const user = {
       first_name: values.firstName,
       last_name: values.lastName,
@@ -56,8 +51,11 @@ const Signup = ({navigation}) => {
     };
     mutation(user)
       .unwrap()
-      .then(data => {
-        // toast.success('Successfully logged in');
+      .then(async data => {
+        storage.set('token', data.token);
+        const userData = await data.user;
+        const jsonValue = JSON.stringify(userData);
+        storage.set('user', jsonValue);
         Toast.show({
           type: 'success',
           text1: 'Successful signup',

@@ -35,16 +35,13 @@ const Login = ({navigation}) => {
       .required('Password is required'),
   });
   const submitHandler = values => {
-    console.log(values);
     mutation(values)
       .unwrap()
       .then(async data => {
-        console.log(data);
         storage.set('token', data.token);
         const user = await data.user;
         const jsonValue = JSON.stringify(user);
         storage.set('user', jsonValue);
-        console.log('user set storage');
         Toast.show({
           type: 'success',
           text1: 'Successful login',

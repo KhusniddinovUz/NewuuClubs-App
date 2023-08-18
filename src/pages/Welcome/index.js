@@ -1,11 +1,18 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {View, Dimensions} from 'react-native';
 import Typography from '../../components/Typography';
 import Button from '../../components/Button';
 import welcomeStyles from './welcome.styles';
+import {useSelector} from 'react-redux';
 
 const Welcome = ({navigation}) => {
   const windowWidth = Dimensions.get('window').width;
+  const isAuth = useSelector(state => state.auth.isAuth);
+  useEffect(() => {
+    if (isAuth) {
+      navigation.navigate('home');
+    }
+  }, [isAuth, navigation]);
   return (
     <View style={welcomeStyles.container}>
       <View style={welcomeStyles.contentWrapper}>

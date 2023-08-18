@@ -3,10 +3,14 @@ import {authApi} from './actions/auth';
 
 const initialState = {
   isAuth: false,
-  token: undefined,
-  email: undefined,
+  id: undefined,
   firstName: undefined,
   lastName: undefined,
+  email: undefined,
+  groupNumber: undefined,
+  studentId: undefined,
+  studentYear: undefined,
+  token: undefined,
   loading: undefined,
   firstTime: true,
 };
@@ -20,10 +24,14 @@ const authSlice = createSlice({
     },
     updateStore: (state, action) => {
       state.isAuth = action.payload.isAuth;
-      state.token = action.payload.token;
-      state.email = action.payload.email;
+      state.id = action.payload.id;
       state.firstName = action.payload.firstName;
       state.lastName = action.payload.lastName;
+      state.email = action.payload.email;
+      state.groupNumber = action.payload.groupNumber;
+      state.studentId = action.payload.studentId;
+      state.studentYear = action.payload.studentYear;
+      state.token = action.payload.token;
       state.firstTime = action.payload.firstTime;
     },
   },
@@ -32,62 +40,79 @@ const authSlice = createSlice({
       authApi.endpoints.loginUser.matchPending,
       (state, action) => {
         state.loading = true;
-        console.log('pending');
+        console.log('login pending');
       },
     );
     builder.addMatcher(
       authApi.endpoints.loginUser.matchFulfilled,
       (state, action) => {
         console.log('login success');
-        state.loading = false;
+        console.log(action.payload);
         state.isAuth = true;
-        state.token = action.payload.token;
-        state.email = action.payload.user.email;
+        state.id = action.payload.user.id;
         state.firstName = action.payload.user.first_name;
         state.lastName = action.payload.user.last_name;
+        state.email = action.payload.user.email;
+        state.groupNumber = action.payload.user.group_number;
+        state.studentId = action.payload.user.student_id;
+        state.studentYear = action.payload.user.student_year;
+        state.token = action.payload.token;
+        state.loading = false;
       },
     );
     builder.addMatcher(
       authApi.endpoints.loginUser.matchRejected,
       (state, action) => {
         console.log('login fail');
-        state.loading = false;
         state.isAuth = undefined;
-        state.token = undefined;
-        state.email = undefined;
+        state.id = undefined;
         state.firstName = undefined;
         state.lastName = undefined;
+        state.email = undefined;
+        state.groupNumber = undefined;
+        state.studentId = undefined;
+        state.studentYear = undefined;
+        state.token = undefined;
+        state.loading = false;
       },
     );
     builder.addMatcher(
       authApi.endpoints.signupUser.matchPending,
       (state, action) => {
-        state.loading = true;
         console.log('pending');
+        state.loading = true;
       },
     );
     builder.addMatcher(
       authApi.endpoints.signupUser.matchFulfilled,
       (state, action) => {
         console.log('signupUser success');
-        state.loading = false;
         state.isAuth = true;
-        state.token = action.payload.token;
-        state.email = action.payload.user.email;
+        state.id = action.payload.user.id;
         state.firstName = action.payload.user.first_name;
         state.lastName = action.payload.user.last_name;
+        state.email = action.payload.user.email;
+        state.groupNumber = action.payload.user.group_number;
+        state.studentId = action.payload.user.student_id;
+        state.studentYear = action.payload.user.student_year;
+        state.token = action.payload.token;
+        state.loading = false;
       },
     );
     builder.addMatcher(
       authApi.endpoints.signupUser.matchRejected,
       (state, action) => {
         console.log('signupUser fail');
-        state.loading = false;
         state.isAuth = undefined;
-        state.token = undefined;
-        state.email = undefined;
+        state.id = undefined;
         state.firstName = undefined;
         state.lastName = undefined;
+        state.email = undefined;
+        state.groupNumber = undefined;
+        state.studentId = undefined;
+        state.studentYear = undefined;
+        state.token = undefined;
+        state.loading = false;
       },
     );
   },
