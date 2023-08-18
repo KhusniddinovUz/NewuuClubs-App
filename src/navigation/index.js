@@ -5,6 +5,7 @@ import Login from '../pages/Login';
 import Signup from '../pages/Signup';
 import Home from '../pages/Home';
 import Intro from '../pages/Intro';
+import Profile from '../pages/Profile';
 import {storage} from '../../App';
 import {useDispatch, useSelector} from 'react-redux';
 import {updateStore} from '../store/auth-slice';
@@ -39,13 +40,8 @@ const NavigatedPages = props => {
         loading: false,
         firstTime: firstTime === undefined,
       };
-      console.log('update store', user, userJson);
       dispatch(updateStore(store));
     };
-
-    // if (!isAuthenticated) {
-    // navigation.navigate('home');
-    // }
 
     updateState();
   }, [dispatch, isAuthenticated]);
@@ -60,6 +56,7 @@ const NavigatedPages = props => {
       <Stack.Screen name={'login'} component={Login} />
       <Stack.Screen name={'signup'} component={Signup} />
       <Stack.Screen name={'home'} component={Home} />
+      <Stack.Screen name={'profile'} component={Profile} />
     </Stack.Navigator>
   );
 };

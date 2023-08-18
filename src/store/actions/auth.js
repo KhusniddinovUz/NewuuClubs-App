@@ -1,8 +1,16 @@
 import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react';
+import {storage} from '../../../App';
 
 export const baseApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: 'https://newuuclubs-backend-edb9a496ad39.herokuapp.com/',
+    prepareHeaders: headers => {
+      const token = storage.getString('token');
+      if (token) {
+        headers.set('Authorization', `Token ${token}`);
+      }
+      return headers;
+    },
   }),
   endpoints: () => ({}),
 });
@@ -29,7 +37,18 @@ export const authApi = baseApi.injectEndpoints({
         },
       }),
     }),
+    updateUser: mutation({
+      query: user => ({
+        url: 'api/auth/update/',
+        method: 'PUT',
+        body: user,
+      }),
+    }),
   }),
 });
 
-export const {useLoginUserMutation, useSignupUserMutation} = authApi;
+export const {
+  useLoginUserMutation,
+  useSignupUserMutation,
+  useUpdateUserMutation,
+} = authApi;

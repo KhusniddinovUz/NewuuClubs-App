@@ -8,11 +8,14 @@ import {useSelector} from 'react-redux';
 const Welcome = ({navigation}) => {
   const windowWidth = Dimensions.get('window').width;
   const isAuth = useSelector(state => state.auth.isAuth);
+  const firstTime = useSelector(state => state.auth.firstTime);
   useEffect(() => {
     if (isAuth) {
       navigation.navigate('home');
+    } else if (firstTime) {
+      navigation.navigate('intro');
     }
-  }, [isAuth, navigation]);
+  }, [isAuth, navigation, firstTime]);
   return (
     <View style={welcomeStyles.container}>
       <View style={welcomeStyles.contentWrapper}>

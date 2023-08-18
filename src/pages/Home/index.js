@@ -31,7 +31,9 @@ const Home = ({navigation}) => {
     <View style={homeStyles.container}>
       <View style={homeStyles.topIconsWrapper}>
         <CategoryIcon />
-        <MaleAvatarIcon />
+        <TouchableOpacity onPress={() => navigation.navigate('profile')}>
+          <MaleAvatarIcon />
+        </TouchableOpacity>
       </View>
       <Typography
         inlineStyle={{textAlign: 'left', marginTop: 15}}

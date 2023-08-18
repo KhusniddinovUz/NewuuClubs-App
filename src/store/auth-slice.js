@@ -1,5 +1,6 @@
 import {createSlice} from '@reduxjs/toolkit';
 import {authApi} from './actions/auth';
+import {err} from 'react-native-svg/lib/typescript/xml';
 
 const initialState = {
   isAuth: false,
@@ -113,6 +114,29 @@ const authSlice = createSlice({
         state.studentYear = undefined;
         state.token = undefined;
         state.loading = false;
+      },
+    );
+    builder.addMatcher(
+      authApi.endpoints.updateUser.matchPending,
+      (state, action) => {
+        state.loading = true;
+        console.log('update profile pending');
+      },
+    );
+    builder.addMatcher(
+      authApi.endpoints.updateUser.matchFulfilled,
+      (state, action) => {
+        state.loading = false;
+        console.log('update profile success');
+        console.log(action.payload);
+      },
+    );
+    builder.addMatcher(
+      authApi.endpoints.updateUser.matchRejected,
+      (state, action) => {
+        state.loading = false;
+        console.log('update profile fail');
+        console.log(action.payload);
       },
     );
   },
